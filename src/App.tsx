@@ -372,7 +372,7 @@ export default function App() {
                   </div>
                   <div className="max-h-[420px] overflow-y-auto rounded-md border border-slate-200">
                     <div className="w-full overflow-x-auto">
-                      <table className="min-w-[980px] w-full text-sm">
+                      <table className="min-w-[900px] w-full text-sm">
                       <thead className="bg-slate-100 text-left text-slate-600">
                         <tr>
                           <th className="px-3 py-2">Student</th>
@@ -532,7 +532,7 @@ export default function App() {
                   </div>
                   <div className="max-h-[420px] overflow-y-auto rounded-md border border-slate-200">
                     <div className="w-full overflow-x-auto">
-                      <table className="min-w-[980px] w-full text-sm">
+                      <table className="min-w-[900px] w-full text-sm">
                       <thead className="bg-slate-100 text-left text-slate-600">
                         <tr>
                           <th className="px-3 py-2">Student</th>

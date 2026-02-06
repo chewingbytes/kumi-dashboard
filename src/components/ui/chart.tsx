@@ -28,13 +28,11 @@ export function ChartContainer({
     <ChartContext.Provider value={config}>
       <div
         className={cn("h-[300px] w-full", className)}
-        style={
-          Object.keys(config).reduce((acc, key) => {
-            const color = config[key]?.color;
-            if (color) acc[`--color-${key}` as any] = color;
-            return acc;
-          }, {} as React.CSSProperties)
-        }
+        style={Object.keys(config).reduce((acc, key) => {
+          const color = config[key]?.color;
+          if (color) acc[`--color-${key}`] = color;
+          return acc;
+        }, {} as Record<string, string>) as React.CSSProperties}
       >
         <ResponsiveContainer>{children as React.ReactElement}</ResponsiveContainer>
       </div>

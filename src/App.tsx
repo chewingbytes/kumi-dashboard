@@ -48,6 +48,20 @@ function parseMinutes(value: string | number | null): number {
   return Number.isNaN(num) ? 0 : num;
 }
 
+function formatDateTime(value: string | null) {
+  if (!value) return "-";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toLocaleString("en-SG", {
+    timeZone: "Asia/Singapore",
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 export default function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -200,8 +214,8 @@ export default function App() {
       row.status,
       row.parent_notified ? "true" : "false",
       row.time_spent ?? "",
-      row.checkin_time ?? "",
-      row.checkout_time ?? "",
+      formatDateTime(row.checkin_time),
+      formatDateTime(row.checkout_time),
       row.date ?? "",
     ]);
 
@@ -369,10 +383,10 @@ export default function App() {
                               {row.time_spent ?? "-"}
                             </td>
                             <td className="px-3 py-2 text-slate-600">
-                              {row.checkin_time ?? "-"}
+                              {formatDateTime(row.checkin_time)}
                             </td>
                             <td className="px-3 py-2 text-slate-600">
-                              {row.checkout_time ?? "-"}
+                              {formatDateTime(row.checkout_time)}
                             </td>
                           </tr>
                         ))}
@@ -531,10 +545,10 @@ export default function App() {
                               {row.time_spent ?? "-"}
                             </td>
                             <td className="px-3 py-2 text-slate-600">
-                              {row.checkin_time ?? "-"}
+                              {formatDateTime(row.checkin_time)}
                             </td>
                             <td className="px-3 py-2 text-slate-600">
-                              {row.checkout_time ?? "-"}
+                              {formatDateTime(row.checkout_time)}
                             </td>
                           </tr>
                         ))}

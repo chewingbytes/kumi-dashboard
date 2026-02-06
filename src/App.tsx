@@ -171,10 +171,25 @@ export default function App() {
 
   const timeChartData = useMemo(() => {
     const source = selectedDate ? historyRecords : filteredCurrentRecords;
-    return source.map((row) => ({
-      name: row.student_name,
-      minutes: parseMinutes(row.time_spent),
-    }));
+    const buckets = [
+      { label: "0-15", min: 0, max: 15 },
+      { label: "16-30", min: 16, max: 30 },
+      { label: "31-45", min: 31, max: 45 },
+      { label: "46-60", min: 46, max: 60 },
+      { label: "60+", min: 61, max: Infinity },
+    ];
+
+    const counts = buckets.map((b) => ({ name: b.label, value: 0 }));
+
+    source.forEach((row) => {
+      const minutes = parseMinutes(row.time_spent);
+      const idx = buckets.findIndex(
+        (b) => minutes >= b.min && minutes <= b.max
+      );
+      if (idx >= 0) counts[idx].value += 1;
+    });
+
+    return counts;
   }, [filteredCurrentRecords, historyRecords, selectedDate]);
 
   const handleSignIn = async (event: FormEvent) => {
@@ -356,7 +371,8 @@ export default function App() {
                     </select>
                   </div>
                   <div className="max-h-[420px] overflow-auto rounded-md border border-slate-200">
-                    <table className="w-full text-sm">
+                    <div className="w-full overflow-x-auto">
+                      <table className="min-w-[720px] w-full text-sm">
                       <thead className="bg-slate-100 text-left text-slate-600">
                         <tr>
                           <th className="px-3 py-2">Student</th>
@@ -400,8 +416,9 @@ export default function App() {
                             </td>
                           </tr>
                         )}
-                      </tbody>
-                    </table>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -438,7 +455,7 @@ export default function App() {
                 <Card>
                   <CardHeader>
                     <CardTitle>Time Spent (mins)</CardTitle>
-                    <CardDescription>Per student today.</CardDescription>
+                    <CardDescription>Distribution by minutes.</CardDescription>
                   </CardHeader>
                   <CardContent>
                     {loading ? (
@@ -448,20 +465,16 @@ export default function App() {
                     ) : (
                       <ChartContainer
                         config={{
-                          minutes: { label: "Minutes", color: "#10b981" },
+                          value: { label: "Students", color: "#10b981" },
                         }}
-                        className="h-[360px]"
+                        className="h-[300px]"
                       >
-                        <BarChart
-                          data={timeChartData}
-                          layout="vertical"
-                          margin={{ left: 12, right: 12 }}
-                        >
+                        <BarChart data={timeChartData} margin={{ left: 12, right: 12 }}>
                           <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis type="number" />
-                          <YAxis type="category" dataKey="name" width={120} />
+                          <XAxis dataKey="name" />
+                          <YAxis allowDecimals={false} />
                           <ChartTooltip />
-                          <Bar dataKey="minutes" fill="var(--color-minutes)" />
+                          <Bar dataKey="value" fill="var(--color-value)" />
                         </BarChart>
                       </ChartContainer>
                     )}
@@ -518,7 +531,8 @@ export default function App() {
                     </Button>
                   </div>
                   <div className="max-h-[420px] overflow-auto rounded-md border border-slate-200">
-                    <table className="w-full text-sm">
+                    <div className="w-full overflow-x-auto">
+                      <table className="min-w-[720px] w-full text-sm">
                       <thead className="bg-slate-100 text-left text-slate-600">
                         <tr>
                           <th className="px-3 py-2">Student</th>
@@ -564,8 +578,9 @@ export default function App() {
                             </td>
                           </tr>
                         )}
-                      </tbody>
-                    </table>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -602,7 +617,7 @@ export default function App() {
               <Card>
                 <CardHeader>
                   <CardTitle>Time Spent (mins)</CardTitle>
-                  <CardDescription>Per student for this date.</CardDescription>
+                  <CardDescription>Distribution by minutes.</CardDescription>
                 </CardHeader>
                 <CardContent>
                   {loading ? (
@@ -612,20 +627,16 @@ export default function App() {
                   ) : (
                     <ChartContainer
                       config={{
-                        minutes: { label: "Minutes", color: "#10b981" },
+                        value: { label: "Students", color: "#10b981" },
                       }}
-                      className="h-[360px]"
+                      className="h-[300px]"
                     >
-                      <BarChart
-                        data={timeChartData}
-                        layout="vertical"
-                        margin={{ left: 12, right: 12 }}
-                      >
+                      <BarChart data={timeChartData} margin={{ left: 12, right: 12 }}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis type="number" />
-                        <YAxis type="category" dataKey="name" width={120} />
+                        <XAxis dataKey="name" />
+                        <YAxis allowDecimals={false} />
                         <ChartTooltip />
-                        <Bar dataKey="minutes" fill="var(--color-minutes)" />
+                        <Bar dataKey="value" fill="var(--color-value)" />
                       </BarChart>
                     </ChartContainer>
                   )}

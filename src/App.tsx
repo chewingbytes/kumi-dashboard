@@ -302,7 +302,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 p-6">
+    <div className="min-h-screen p-6">
       <div className="mx-auto flex max-w-7xl flex-col gap-6">
         <div className="flex items-center justify-between">
           <div>

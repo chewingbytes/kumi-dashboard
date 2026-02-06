@@ -371,8 +371,8 @@ export default function App() {
                     </select>
                   </div>
                   <div className="max-h-[420px] overflow-y-auto rounded-md border border-slate-200">
-                    <div className="w-full overflow-x-auto">
-                      <table className="min-w-[900px] w-full text-sm">
+                    <div className="w-full overflow-x-auto touch-pan-x overscroll-x-contain">
+                      <table className="min-w-[1200px] w-full text-sm">
                       <thead className="bg-slate-100 text-left text-slate-600">
                         <tr>
                           <th className="px-3 py-2">Student</th>
@@ -531,8 +531,8 @@ export default function App() {
                     </Button>
                   </div>
                   <div className="max-h-[420px] overflow-y-auto rounded-md border border-slate-200">
-                    <div className="w-full overflow-x-auto">
-                      <table className="min-w-[900px] w-full text-sm">
+                    <div className="w-full overflow-x-auto touch-pan-x overscroll-x-contain">
+                      <table className="min-w-[1200px] w-full text-sm">
                       <thead className="bg-slate-100 text-left text-slate-600">
                         <tr>
                           <th className="px-3 py-2">Student</th>

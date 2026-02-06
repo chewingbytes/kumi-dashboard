@@ -357,6 +357,8 @@ export default function App() {
                           <th className="px-3 py-2">Status</th>
                           <th className="px-3 py-2">Notified</th>
                           <th className="px-3 py-2">Time Spent</th>
+                          <th className="px-3 py-2">Check In</th>
+                          <th className="px-3 py-2">Check Out</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -374,13 +376,19 @@ export default function App() {
                             <td className="px-3 py-2 text-slate-600">
                               {row.time_spent ?? "-"}
                             </td>
+                            <td className="px-3 py-2 text-slate-600">
+                              {row.checkin_time ?? "-"}
+                            </td>
+                            <td className="px-3 py-2 text-slate-600">
+                              {row.checkout_time ?? "-"}
+                            </td>
                           </tr>
                         ))}
                         {filteredCurrentRecords.length === 0 && (
                           <tr>
                             <td
                               className="px-3 py-6 text-center text-slate-500"
-                              colSpan={4}
+                              colSpan={6}
                             >
                               No current records.
                             </td>
@@ -511,6 +519,8 @@ export default function App() {
                           <th className="px-3 py-2">Status</th>
                           <th className="px-3 py-2">Notified</th>
                           <th className="px-3 py-2">Time Spent</th>
+                          <th className="px-3 py-2">Check In</th>
+                          <th className="px-3 py-2">Check Out</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -528,13 +538,19 @@ export default function App() {
                             <td className="px-3 py-2 text-slate-600">
                               {row.time_spent ?? "-"}
                             </td>
+                            <td className="px-3 py-2 text-slate-600">
+                              {row.checkin_time ?? "-"}
+                            </td>
+                            <td className="px-3 py-2 text-slate-600">
+                              {row.checkout_time ?? "-"}
+                            </td>
                           </tr>
                         ))}
                         {historyRecords.length === 0 && (
                           <tr>
                             <td
                               className="px-3 py-6 text-center text-slate-500"
-                              colSpan={4}
+                              colSpan={6}
                             >
                               {selectedDate
                                 ? "No records for this date."

@@ -66,6 +66,9 @@ export default function App() {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [currentRecords, setCurrentRecords] = useState<AttendanceRecord[]>([]);
   const [historyRecords, setHistoryRecords] = useState<AttendanceRecord[]>([]);
+  const [currentSearch, setCurrentSearch] = useState("");
+  const [currentStatusFilter, setCurrentStatusFilter] = useState("all");
+  const [currentNotifiedFilter, setCurrentNotifiedFilter] = useState("all");
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -127,8 +130,23 @@ export default function App() {
       .finally(() => setLoading(false));
   }, [selectedDate, sessionToken]);
 
+  const filteredCurrentRecords = useMemo(() => {
+    return currentRecords.filter((row) => {
+      const matchesSearch = row.student_name
+        .toLowerCase()
+        .includes(currentSearch.toLowerCase());
+      const matchesStatus =
+        currentStatusFilter === "all" || row.status === currentStatusFilter;
+      const matchesNotified =
+        currentNotifiedFilter === "all" ||
+        (currentNotifiedFilter === "yes" && row.parent_notified) ||
+        (currentNotifiedFilter === "no" && !row.parent_notified);
+      return matchesSearch && matchesStatus && matchesNotified;
+    });
+  }, [currentRecords, currentSearch, currentStatusFilter, currentNotifiedFilter]);
+
   const statusChartData = useMemo(() => {
-    const source = selectedDate ? historyRecords : currentRecords;
+    const source = selectedDate ? historyRecords : filteredCurrentRecords;
     const counts = source.reduce(
       (acc, row) => {
         if (row.status === "checked_in") acc.checkedIn += 1;
@@ -146,12 +164,12 @@ export default function App() {
   }, [currentRecords, historyRecords, selectedDate]);
 
   const timeChartData = useMemo(() => {
-    const source = selectedDate ? historyRecords : currentRecords;
+    const source = selectedDate ? historyRecords : filteredCurrentRecords;
     return source.map((row) => ({
       name: row.student_name,
       minutes: parseMinutes(row.time_spent),
     }));
-  }, [currentRecords, historyRecords, selectedDate]);
+  }, [filteredCurrentRecords, historyRecords, selectedDate]);
 
   const handleSignIn = async (event: FormEvent) => {
     event.preventDefault();
@@ -170,6 +188,51 @@ export default function App() {
     setSelectedDate(null);
     setCurrentRecords([]);
     setHistoryRecords([]);
+  };
+
+  const downloadHistoryCsv = () => {
+    if (!selectedDate || historyRecords.length === 0) return;
+
+    const headers = [
+      "student_name",
+      "status",
+      "parent_notified",
+      "time_spent",
+      "checkin_time",
+      "checkout_time",
+      "date",
+    ];
+
+    const rows = historyRecords.map((row) => [
+      row.student_name,
+      row.status,
+      row.parent_notified ? "true" : "false",
+      row.time_spent ?? "",
+      row.checkin_time ?? "",
+      row.checkout_time ?? "",
+      row.date ?? "",
+    ]);
+
+    const csv = [headers, ...rows]
+      .map((line) =>
+        line
+          .map((value) => {
+            const text = String(value).replace(/"/g, '""');
+            return `"${text}"`;
+          })
+          .join(",")
+      )
+      .join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `attendance_${selectedDate}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   if (!sessionToken) {
@@ -260,6 +323,32 @@ export default function App() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
+                  <div className="mb-4 grid gap-3 md:grid-cols-3">
+                    <input
+                      className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm"
+                      placeholder="Search student..."
+                      value={currentSearch}
+                      onChange={(e) => setCurrentSearch(e.target.value)}
+                    />
+                    <select
+                      className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm"
+                      value={currentStatusFilter}
+                      onChange={(e) => setCurrentStatusFilter(e.target.value)}
+                    >
+                      <option value="all">All Status</option>
+                      <option value="checked_in">Checked In</option>
+                      <option value="checked_out">Checked Out</option>
+                    </select>
+                    <select
+                      className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm"
+                      value={currentNotifiedFilter}
+                      onChange={(e) => setCurrentNotifiedFilter(e.target.value)}
+                    >
+                      <option value="all">All Notifications</option>
+                      <option value="yes">Notified</option>
+                      <option value="no">Not Notified</option>
+                    </select>
+                  </div>
                   <div className="max-h-[420px] overflow-auto rounded-md border border-slate-200">
                     <table className="w-full text-sm">
                       <thead className="bg-slate-100 text-left text-slate-600">
@@ -271,7 +360,7 @@ export default function App() {
                         </tr>
                       </thead>
                       <tbody>
-                        {currentRecords.map((row) => (
+                        {filteredCurrentRecords.map((row) => (
                           <tr key={row.id} className="border-t">
                             <td className="px-3 py-2 font-medium text-slate-800">
                               {row.student_name}
@@ -287,7 +376,7 @@ export default function App() {
                             </td>
                           </tr>
                         ))}
-                        {currentRecords.length === 0 && (
+                        {filteredCurrentRecords.length === 0 && (
                           <tr>
                             <td
                               className="px-3 py-6 text-center text-slate-500"
@@ -310,19 +399,25 @@ export default function App() {
                     <CardDescription>Checked in/out and notified.</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <ChartContainer
-                      config={{
-                        value: { label: "Count", color: "#2563eb" },
-                      }}
-                    >
-                      <BarChart data={statusChartData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis allowDecimals={false} />
-                        <ChartTooltip />
-                        <Bar dataKey="value" fill="var(--color-value)" />
-                      </BarChart>
-                    </ChartContainer>
+                    {loading ? (
+                      <div className="flex h-[300px] items-center justify-center">
+                        <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-300 border-t-slate-900" />
+                      </div>
+                    ) : (
+                      <ChartContainer
+                        config={{
+                          value: { label: "Count", color: "#2563eb" },
+                        }}
+                      >
+                        <BarChart data={statusChartData}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="name" />
+                          <YAxis allowDecimals={false} />
+                          <ChartTooltip />
+                          <Bar dataKey="value" fill="var(--color-value)" />
+                        </BarChart>
+                      </ChartContainer>
+                    )}
                   </CardContent>
                 </Card>
 
@@ -332,24 +427,30 @@ export default function App() {
                     <CardDescription>Per student today.</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <ChartContainer
-                      config={{
-                        minutes: { label: "Minutes", color: "#10b981" },
-                      }}
-                    >
-                      <LineChart data={timeChartData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" hide />
-                        <YAxis />
-                        <ChartTooltip />
-                        <Line
-                          type="monotone"
-                          dataKey="minutes"
-                          stroke="var(--color-minutes)"
-                          strokeWidth={2}
-                        />
-                      </LineChart>
-                    </ChartContainer>
+                    {loading ? (
+                      <div className="flex h-[300px] items-center justify-center">
+                        <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-300 border-t-slate-900" />
+                      </div>
+                    ) : (
+                      <ChartContainer
+                        config={{
+                          minutes: { label: "Minutes", color: "#10b981" },
+                        }}
+                        className="h-[360px]"
+                      >
+                        <BarChart
+                          data={timeChartData}
+                          layout="vertical"
+                          margin={{ left: 12, right: 12 }}
+                        >
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis type="number" />
+                          <YAxis type="category" dataKey="name" width={120} />
+                          <ChartTooltip />
+                          <Bar dataKey="minutes" fill="var(--color-minutes)" />
+                        </BarChart>
+                      </ChartContainer>
+                    )}
                   </CardContent>
                 </Card>
               </div>
@@ -393,6 +494,15 @@ export default function App() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
+                  <div className="mb-3 flex items-center justify-end gap-2">
+                    <Button
+                      variant="outline"
+                      disabled={!selectedDate || historyRecords.length === 0}
+                      onClick={downloadHistoryCsv}
+                    >
+                      Download CSV
+                    </Button>
+                  </div>
                   <div className="max-h-[420px] overflow-auto rounded-md border border-slate-200">
                     <table className="w-full text-sm">
                       <thead className="bg-slate-100 text-left text-slate-600">
@@ -445,19 +555,25 @@ export default function App() {
                   <CardDescription>Checked in/out and notified.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ChartContainer
-                    config={{
-                      value: { label: "Count", color: "#2563eb" },
-                    }}
-                  >
-                    <BarChart data={statusChartData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
-                      <YAxis allowDecimals={false} />
-                      <ChartTooltip />
-                      <Bar dataKey="value" fill="var(--color-value)" />
-                    </BarChart>
-                  </ChartContainer>
+                  {loading ? (
+                    <div className="flex h-[300px] items-center justify-center">
+                      <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-300 border-t-slate-900" />
+                    </div>
+                  ) : (
+                    <ChartContainer
+                      config={{
+                        value: { label: "Count", color: "#2563eb" },
+                      }}
+                    >
+                      <BarChart data={statusChartData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis allowDecimals={false} />
+                        <ChartTooltip />
+                        <Bar dataKey="value" fill="var(--color-value)" />
+                      </BarChart>
+                    </ChartContainer>
+                  )}
                 </CardContent>
               </Card>
 
@@ -467,35 +583,36 @@ export default function App() {
                   <CardDescription>Per student for this date.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ChartContainer
-                    config={{
-                      minutes: { label: "Minutes", color: "#10b981" },
-                    }}
-                  >
-                    <LineChart data={timeChartData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" hide />
-                      <YAxis />
-                      <ChartTooltip />
-                      <Line
-                        type="monotone"
-                        dataKey="minutes"
-                        stroke="var(--color-minutes)"
-                        strokeWidth={2}
-                      />
-                    </LineChart>
-                  </ChartContainer>
+                  {loading ? (
+                    <div className="flex h-[300px] items-center justify-center">
+                      <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-300 border-t-slate-900" />
+                    </div>
+                  ) : (
+                    <ChartContainer
+                      config={{
+                        minutes: { label: "Minutes", color: "#10b981" },
+                      }}
+                      className="h-[360px]"
+                    >
+                      <BarChart
+                        data={timeChartData}
+                        layout="vertical"
+                        margin={{ left: 12, right: 12 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis type="number" />
+                        <YAxis type="category" dataKey="name" width={120} />
+                        <ChartTooltip />
+                        <Bar dataKey="minutes" fill="var(--color-minutes)" />
+                      </BarChart>
+                    </ChartContainer>
+                  )}
                 </CardContent>
               </Card>
             </div>
           </TabsContent>
         </Tabs>
       </div>
-      {loading && (
-        <div className="fixed bottom-6 right-6 rounded-md bg-slate-900 px-4 py-2 text-sm text-white shadow">
-          Loading...
-        </div>
-      )}
     </div>
   );
 }

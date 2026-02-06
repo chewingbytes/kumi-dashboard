@@ -1,13 +1,5 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Line,
-  LineChart,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";

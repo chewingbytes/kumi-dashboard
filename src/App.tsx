@@ -18,7 +18,8 @@ type AttendanceRecord = {
   student_id: number;
   student_name: string;
   status: string;
-  parent_notified: boolean;
+  parent_notified: string | null;
+  failed_reason?: string | null;
   checkin_time: string | null;
   checkout_time: string | null;
   time_spent: string | number | null;
@@ -143,10 +144,16 @@ export default function App() {
         .includes(currentSearch.toLowerCase());
       const matchesStatus =
         currentStatusFilter === "all" || row.status === currentStatusFilter;
+      const notifiedStatus = (row.parent_notified || "")
+        .toString()
+        .toUpperCase();
+      const isNotified = ["SENT", "DELIVERED", "READ", "PLAYED"].includes(
+        notifiedStatus
+      );
       const matchesNotified =
         currentNotifiedFilter === "all" ||
-        (currentNotifiedFilter === "yes" && row.parent_notified) ||
-        (currentNotifiedFilter === "no" && !row.parent_notified);
+        (currentNotifiedFilter === "yes" && isNotified) ||
+        (currentNotifiedFilter === "no" && !isNotified);
       return matchesSearch && matchesStatus && matchesNotified;
     });
   }, [currentRecords, currentSearch, currentStatusFilter, currentNotifiedFilter]);
@@ -157,7 +164,12 @@ export default function App() {
       (acc, row) => {
         if (row.status === "checked_in") acc.checkedIn += 1;
         if (row.status === "checked_out") acc.checkedOut += 1;
-        if (row.parent_notified) acc.notified += 1;
+        const notifiedStatus = (row.parent_notified || "")
+          .toString()
+          .toUpperCase();
+        if (["SENT", "DELIVERED", "READ", "PLAYED"].includes(notifiedStatus)) {
+          acc.notified += 1;
+        }
         return acc;
       },
       { checkedIn: 0, checkedOut: 0, notified: 0 }
@@ -218,6 +230,7 @@ export default function App() {
       "student_name",
       "status",
       "parent_notified",
+      "failed_reason",
       "time_spent",
       "checkin_time",
       "checkout_time",
@@ -227,7 +240,8 @@ export default function App() {
     const rows = historyRecords.map((row) => [
       row.student_name,
       row.status,
-      row.parent_notified ? "true" : "false",
+      row.parent_notified ?? "",
+      row.failed_reason ?? "",
       row.time_spent ?? "",
       formatDateTime(row.checkin_time),
       formatDateTime(row.checkout_time),
@@ -378,6 +392,7 @@ export default function App() {
                           <th className="px-3 py-2">Student</th>
                           <th className="px-3 py-2">Status</th>
                           <th className="px-3 py-2">Notified</th>
+                          <th className="px-3 py-2">Failed Reason</th>
                           <th className="px-3 py-2">Time Spent</th>
                           <th className="px-3 py-2">Check In</th>
                           <th className="px-3 py-2">Check Out</th>
@@ -393,7 +408,10 @@ export default function App() {
                               {row.status}
                             </td>
                             <td className="px-3 py-2 text-slate-600">
-                              {row.parent_notified ? "Yes" : "No"}
+                              {row.parent_notified ?? "-"}
+                            </td>
+                            <td className="px-3 py-2 text-slate-600">
+                              {row.failed_reason ?? "-"}
                             </td>
                             <td className="px-3 py-2 text-slate-600">
                               {row.time_spent ?? "-"}
@@ -410,7 +428,7 @@ export default function App() {
                           <tr>
                             <td
                               className="px-3 py-6 text-center text-slate-500"
-                              colSpan={6}
+                              colSpan={7}
                             >
                               No current records.
                             </td>

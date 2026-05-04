@@ -12,8 +12,16 @@ export default {
     extend: {
       fontFamily: {
         background: ["#FFFDF5", "sans-serif"], 
-        sans: ["Plus Jakarta Sans", "system-ui", "sans-serif"],
-        heading: ["Outfit", "system-ui", "sans-serif"],
+        sans: ["DynaPuff", "system-ui", "sans-serif"],
+        heading: ["DynaPuff", "system-ui", "sans-serif"],
+      },
+      fontWeight: {
+        normal: "300",
+        medium: "400",
+        semibold: "500",
+        bold: "600",
+        extrabold: "700",
+        black: "800",
       },
       colors: {
         background: "#FFFDF5", // Warm Cream

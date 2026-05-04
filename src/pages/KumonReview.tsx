@@ -41,12 +41,12 @@ export default function KumonReview() {
 			</header>
 
 			<main className="max-w-5xl mx-auto px-6 py-12 md:py-16 space-y-14 md:space-y-16">
-				<section className="space-y-6 text-center md:text-left">
+				<section className="space-y-6 text-left">
 					<p className="inline-block text-sm px-4 py-1.5 rounded-full border-2 border-[#1E293B] bg-[#FDF2F8] shadow-[4px_4px_0px_#1E293B]">
-						Center Implementation Notes
+						Center Implementation Article
 					</p>
 					<h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.15]">
-						Our thoughts after implementing Kumi at a Kumon center
+						Implementing Kumi at Kumon @ Punggol Plaza
 					</h1>
 					<p className="text-lg md:text-xl text-[#64748B] leading-relaxed max-w-3xl mx-auto md:mx-0">
 						This page shares a sample long-form article layout with visuals and

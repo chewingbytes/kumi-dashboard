@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, Mail, MapPin, Phone, Send } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Mail, MapPin, Phone, Send } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
-import { Button } from "@/components/ui/button";
 
 const supabase = createClient(
   "http://46.62.162.240:8000",
@@ -75,7 +73,7 @@ export default function ContactPage() {
               Kumi
             </h1>
             <p className="capitalize text-[#64748B] mb-1 font-thin tracking-tight text-xs">
-                Contact
+              Contact
             </p>
           </div>
         </div>
@@ -90,24 +88,34 @@ export default function ContactPage() {
             <span className="inline-flex items-center rounded-full border-2 border-[#1E293B] bg-[#F472B6] text-white px-4 py-1 font-semibold text-sm shadow-[4px_4px_0px_#1E293B] -rotate-1">
               Contact Us
             </span>
-            <h1 className="text-4xl sm:text-5xl font-medium leading-tight">
-              Let’s bring <span className="text-[#8B5CF6]">Kumi</span> to your
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-medium leading-tight">
+              Let’s bring <span className="text-[#8B5CF6] underline decoration-wavy decoration-[#FBBF24]">Kumi</span> to your
               center.
             </h1>
             <p className="text-[#64748B] text-lg leading-relaxed">
-              Share your center details or questions and our team will help you
-              set up a smooth attendance workflow with parent notifications and
-              dashboard tracking.
+              Have questions about Kumi or interested in implementing our
+              system? Fill out the form below and we'll reach out to help you
+              get started.
             </p>
 
             <div className="space-y-3 pt-2">
               <div className="flex items-center gap-3 rounded-2xl border-2 border-[#1E293B] bg-white p-3 shadow-[4px_4px_0px_#1E293B]">
                 <Mail className="h-5 w-5 text-[#8B5CF6]" />
-                <span className="font-semibold">bryanchewzy24@gmail.com</span>
+                <a
+                  className="hover:text-[#8B5CF6] transition duration-200"
+                  href="mailto:bryanchewzy24@gmail.com"
+                >
+                  bryanchewzy24@gmail.com
+                </a>
               </div>
               <div className="flex items-center gap-3 rounded-2xl border-2 border-[#1E293B] bg-white p-3 shadow-[4px_4px_0px_#1E293B]">
                 <Phone className="h-5 w-5 text-[#8B5CF6]" />
-                <span className="font-semibold">+65 0000 0000</span>
+                <a
+                  href="tel:+6598190072"
+                  className="hover:text-[#8B5CF6] transition duration-200"
+                >
+                  +65 9819 0072
+                </a>
               </div>
               <div className="flex items-center gap-3 rounded-2xl border-2 border-[#1E293B] bg-white p-3 shadow-[4px_4px_0px_#1E293B]">
                 <MapPin className="h-5 w-5 text-[#8B5CF6]" />
@@ -125,12 +133,9 @@ export default function ContactPage() {
                 <h2 className="text-2xl sm:text-3xl font-semibold text-white uppercase">
                   Send us a message
                 </h2>
-                <p className="text-white/90 text-sm sm:text-base mt-1">
-                  We usually reply within 24 hours.
-                </p>
               </div>
               <span className="inline-block bg-white text-black border-2 border-black px-3 py-1 font-black text-[10px] uppercase tracking-widest -rotate-1 rounded-full">
-                Fast response
+                We'll respond within 24 hours
               </span>
             </div>
 
@@ -152,7 +157,7 @@ export default function ContactPage() {
                   onChange={handleFormChange}
                   type="text"
                   required
-                  placeholder="Your full name"
+                  placeholder="Your name"
                   className="w-full border-4 border-black px-3 py-2 font-bold bg-white placeholder:text-black/40 focus:outline-none focus:bg-[#FBBF24]"
                 />
               </div>
@@ -190,7 +195,7 @@ export default function ContactPage() {
                   onChange={handleFormChange}
                   required
                   rows={7}
-                  placeholder="Tell us about your center and what help you need..."
+                  placeholder="Type your message here..."
                   className="w-full border-4 border-black px-3 py-2 font-bold bg-white placeholder:text-black/40 focus:outline-none focus:bg-[#FBBF24] resize-none"
                 />
               </div>

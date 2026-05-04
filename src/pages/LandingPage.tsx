@@ -237,7 +237,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-4">
             <h2 className="font-['DynaPuff'] text-4xl font-bold text-[#1E293B]">
-              How Kumi Works
+              How <span className="text-[#8B5CF6] underline decoration-wavy decoration-[#FBBF24]">Kumi</span> Works
             </h2>
             <p className="text-lg text-[#64748B]">
               Contact us and we'll schedule a walkthrough to see how Kumi can
@@ -316,7 +316,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
             <h2 className="font-['DynaPuff'] text-4xl font-bold text-[#1E293B]">
-              Why Kumi?
+              Why <span className="text-[#8B5CF6] underline decoration-wavy decoration-[#FBBF24]">Kumi</span>?
             </h2>
             <p className="text-lg text-[#64748B]">
               Stop having congested waiting areas. Kumi automatically notifies
@@ -453,7 +453,8 @@ export default function LandingPage() {
                 QR Code Setup
               </h3>
               <p className="text-[#64748B]">
-                We can ship the QR codes to you, or print them out yourself.
+                We can ship the QR codes to you, or you can print them out
+                yourself.
               </p>
             </div>
           </div>
@@ -576,10 +577,6 @@ export default function LandingPage() {
                   Kumi, built for Kumon Centers.
                 </h2>
               </div>
-              <p className="text-sm font-medium text-[#64748B] max-w-md mb-6">
-                Singapore's verified student community platform. Built for
-                students, by students.
-              </p>
               {/* <div className="flex gap-2 flex-wrap">
                 <span className="bg-neo-secondary border-2 border-white/20 text-black px-2 py-1 font-black text-xs uppercase">
                   🇸🇬 Singapore
@@ -593,50 +590,53 @@ export default function LandingPage() {
               </div> */}
             </div>
             <div>
-              <h3 className="text-lg font-black uppercase mb-4 text-neo-secondary">
+              <h3 className="text-lg font-black uppercase mb-8 text-neo-secondary">
                 Platform
               </h3>
-              <ul className="space-y-2 text-[#64748B] font-medium">
+              <ul className="space-y-4 text-[#64748B] font-medium">
                 <li>
                   <a
-                    href="/communities"
-                    className="hover:text-neo-primary transition-colors"
+                    href="#how-kumi-works"
+                    className="hover:text-[#8B5CF6] hover:cursor-pointer transition-colors"
                   >
-                    Communities
+                    Why Kumi
                   </a>
                 </li>
                 <li>
                   <a
-                    href="#how-it-works"
-                    className="hover:text-neo-primary transition-colors"
+                    href="/features/qr-implementation"
+                    className="hover:text-[#8B5CF6] hover:cursor-pointer transition-colors"
                   >
-                    How It Works
+                    QR Automation
                   </a>
                 </li>
                 <li>
                   <a
-                    href="#safety"
-                    className="hover:text-neo-primary transition-colors"
+                    href="/features/whatsapp-notifications"
+                    className="hover:text-[#8B5CF6] hover:cursor-pointer transition-colors"
                   >
-                    Safety
+                    Whatsapp Integration
                   </a>
                 </li>
                 <li>
-                  <button className="open-waitlist hover:text-neo-secondary transition-colors text-left">
-                    Join Waitlist
-                  </button>
+                  <a
+                    href="/features/dashboard"
+                    className="hover:text-[#8B5CF6] hover:cursor-pointer transition-colors"
+                  >
+                    Explore the Dashboard
+                  </a>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-black uppercase mb-4 text-neo-secondary">
+              <h3 className="text-lg font-black uppercase mb-8 text-neo-secondary">
                 Legal
               </h3>
-              <ul className="space-y-2 text-[#64748B] font-medium">
+              <ul className="space-y-4 text-[#64748B] font-medium">
                 <li>
                   <a
                     href="/privacy-policy"
-                    className="hover:text-neo-primary transition-colors"
+                    className="hover:text-[#8B5CF6] hover:cursor-pointer transition-colors"
                   >
                     Privacy Policy
                   </a>
@@ -644,7 +644,7 @@ export default function LandingPage() {
                 <li>
                   <Link
                     to="/contact"
-                    className="hover:text-neo-primary transition-colors"
+                    className="hover:text-[#8B5CF6] hover:cursor-pointer transition-colors"
                   >
                     Contact Support
                   </Link>
@@ -659,7 +659,7 @@ export default function LandingPage() {
             <div className="mb-4 flex flex-col md:flex-row md:items-end md:justify-between gap-3">
               <div>
                 <h3 className="text-xl md:text-2xl font-semibold uppercase text-white mb-1">
-                  Ready to streamline your Kumon center?
+                  Ready to upgrade your center?
                 </h3>
                 <p className="text-sm md:text-base font-medium text-white max-w-xl">
                   Have questions about Kumi or interested in implementing our
@@ -691,7 +691,7 @@ export default function LandingPage() {
                     onChange={handleFormChange}
                     type="text"
                     required
-                    placeholder="Your full name"
+                    placeholder="Your name"
                     className="w-full border-4 border-black px-3 py-2 font-bold bg-white placeholder:text-black/40 focus:outline-none focus:bg-neo-secondary focus:shadow-neo"
                   />
                 </div>

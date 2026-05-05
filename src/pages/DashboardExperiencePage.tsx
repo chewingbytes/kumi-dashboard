@@ -65,9 +65,9 @@ export default function DashboardExperiencePage() {
           >
             <ArrowLeft className="w-4 h-4" /> Back to Home
           </Link>
-          <Link to="/dashboard">
+          <Link to="/contact">
             <Button className="bg-[#3B82F6] hover:bg-[#2563EB] text-white border-2 border-[#1E293B] shadow-[4px_4px_0px_#1E293B] rounded-full font-bold">
-              Explore Demo <ArrowRight className="ml-2 h-4 w-4" />
+              Get Started <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
         </div>

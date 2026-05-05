@@ -186,17 +186,17 @@ export default function LandingPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/dashboard">
+              <Link to="/contact">
                 <Button className="h-14 px-8 text-lg bg-[#34D399] hover:bg-[#10B981] text-[#1E293B] border-2 border-[#1E293B] shadow-[4px_4px_0px_#1E293B] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#1E293B] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0px_#1E293B] transition-all rounded-full font-bold w-full sm:w-auto">
-                  Try It Now
+                  Get Started
                 </Button>
               </Link>
-              <Link to="/dashboard">
+              <Link to="/features/qr-implementation">
                 <Button
                   variant="outline"
                   className="h-14 px-8 text-lg bg-white hover:bg-[#F1F5F9] text-[#1E293B] border-2 border-[#1E293B] shadow-[4px_4px_0px_#CBD5E1] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#CBD5E1] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0px_#CBD5E1] transition-all rounded-full font-bold w-full sm:w-auto"
                 >
-                  View Demo
+                  About Kumi
                 </Button>
               </Link>
             </div>
@@ -463,7 +463,7 @@ export default function LandingPage() {
           </div>
 
           <div className="text-center">
-            <Link to="/dashboard">
+            <Link to="/contact">
               <Button className="h-14 px-10 text-lg bg-[#8B5CF6] hover:bg-[#7C3AED] text-white border-2 border-[#1E293B] shadow-[4px_4px_0px_#1E293B] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#1E293B] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0px_#1E293B] transition-all rounded-full font-bold">
                 Get Started
               </Button>
@@ -525,15 +525,15 @@ export default function LandingPage() {
           <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#FBBF24] opacity-20 rounded-full -translate-x-1/3 translate-y-1/3" />
 
           <h2 className="font-['DynaPuff'] text-4xl sm:text-5xl font-bold text-white mb-6 relative z-10">
-            Ready to ditch the manual tracking?
+            Ready to upgrade your center?
           </h2>
           <p className="text-white/90 text-xl mb-8 max-w-2xl mx-auto relative z-10">
             Join the automated future of Kumon centers.
           </p>
           <div className="relative z-10">
-            <Link to="/dashboard">
+            <Link to="/contact">
               <Button className="h-14 px-10 text-lg bg-white hover:bg-[#FBBF24] text-[#1E293B] border-2 border-[#1E293B] shadow-[4px_4px_0px_#1E293B] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#1E293B] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0px_#1E293B] transition-all rounded-full font-bold">
-                Go to Dashboard
+                Get Started Today
               </Button>
             </Link>
           </div>

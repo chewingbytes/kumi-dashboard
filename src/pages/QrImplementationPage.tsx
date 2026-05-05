@@ -84,7 +84,7 @@ export default function QrImplementationPage() {
           >
             <ArrowLeft className="w-4 h-4" /> Back to Home
           </Link>
-          <Link to="/dashboard">
+          <Link to="/contact">
             <Button className="bg-[#EF4444] hover:bg-[#DC2626] text-white border-2 border-[#1E293B] shadow-[4px_4px_0px_#1E293B] rounded-full font-bold">
               Get Started <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
@@ -114,7 +114,7 @@ export default function QrImplementationPage() {
                   departure.
                 </p>
               </div>
-              <Link to="/dashboard">
+              <Link to="/contact">
                 <Button className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white border-2 border-[#1E293B] shadow-[4px_4px_0px_#1E293B] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_#1E293B] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0px_#1E293B] transition-all rounded-full font-bold">
                   Get Started <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>

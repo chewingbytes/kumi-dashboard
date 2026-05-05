@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Zap } from "lucide-react";
 import { Link } from "react-router-dom";
+import kumiLogo from "@/assets/image.png";
 
 const PRICING_TIERS = [
   { label: "100 – 150", min: 100, max: 150, monthly: 120 },
@@ -29,7 +30,7 @@ export default function PricingPage() {
         <div className="flex justify-center items-center gap-2 sm:gap-3">
           <a href="/">
             <img
-              src="/src/assets/image.png"
+              src={kumiLogo}
               alt="Kumi Logo"
               className="w-9 h-9 sm:w-12 sm:h-12 shadow-[4px_4px_0px_#1E293B] rounded-full border-2 border-[#1E293B]"
             />

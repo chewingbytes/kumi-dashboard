@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { ArrowRight, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import heroImage from "@/assets/hero.jpg";
+import kumiLogo from "@/assets/image.png";
+import kumiMark from "@/assets/k-min.png";
 
 const API_URL = import.meta.env.VITE_API_BASE || "http://localhost:8080";
 
@@ -130,7 +133,7 @@ export default function LandingPage() {
           <div className="flex items-center gap-2 sm:gap-3">
             <a href="/">
               <img
-                src="/src/assets/k-min.png"
+                src={kumiMark}
                 alt="Kumi Logo"
                 className="w-9 h-9 sm:w-12 sm:h-12 shadow-[4px_4px_0px_#1E293B] rounded-full border-2 border-[#1E293B]"
               />
@@ -203,14 +206,14 @@ export default function LandingPage() {
             <div className="relative">
               <div className="relative z-10 border-2 border-[#1E293B] rounded-tl-[100px] rounded-tr-[40px] rounded-br-[100px] rounded-bl-[40px] overflow-hidden shadow-[12px_12px_0px_#1E293B] bg-white transition-transform hover:rotate-3 duration-500 hover:scale-105">
                 <img
-                  src="/src/assets/hero.jpg"
+                  src={heroImage}
                   alt="Student scanning QR code"
                   className="w-full h-full object-cover mix-blend-multiply"
                 />
               </div>
 
               <div className="absolute -top-8 -right-8 w-24 h-24 border-2 border-[#1E293B] rounded-full shadow-[4px_4px_0px_#1E293B] animate-wiggle delay-700 z-20">
-                <img src="/src/assets/image.png" alt="Kumi Logo" className="" />
+                <img src={kumiLogo} alt="Kumi Logo" className="" />
               </div>
               <div className="absolute -bottom-6 -left-6 z-0 w-full h-full border-2 border-[#1E293B] rounded-tl-[100px] rounded-tr-[40px] rounded-br-[100px] rounded-bl-[40px] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjRjFGNUY5Ii8+CjxjaXJjbGUgY3g9IjIiIGN5PSIyIiByPSIxIiBmaWxsPSIjQ0JENVExIi8+Cjwvc3ZnPg==')] opacity-50" />
             </div>
@@ -378,7 +381,7 @@ export default function LandingPage() {
                   Simply Ask Kumi{" "}
                 </h3>
                 <img
-                  src="/src/assets/image.png"
+                  src={kumiLogo}
                   alt="Kumi Logo"
                   className="w-7 h-7 border border-[#1E293B] rounded-full"
                 />
@@ -542,7 +545,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2">
             <img
-              src="/src/assets/image.png"
+              src={kumiLogo}
               alt="Kumi Logo"
               className="w-12 h-12"
             />
@@ -569,7 +572,7 @@ export default function LandingPage() {
             <div className="md:col-span-2">
               <div className="flex items-center gap-4 mb-4">
                 <img
-                  src="/src/assets/image.png"
+                  src={kumiLogo}
                   alt="Hangout!"
                   className="w-14 h-14 shadow-[4px_4px_0px_#1E293B] rounded-full border-2 border-[#1E293B]"
                 />

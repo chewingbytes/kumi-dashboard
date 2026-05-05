@@ -1,4 +1,5 @@
 import { LogOut } from "lucide-react";
+import kumiAvatar from "/k2-min.png";
 
 import { Button } from "@/components/ui/button";
 
@@ -16,7 +17,7 @@ export function DashboardHeader({
       <div className="flex items-center gap-4">
         <div className="flex h-12 w-12 items-center justify-center text-white rotate-3 hover:rotate-12 transition-transform">
           <img
-            src="/k2-min.png"
+            src={kumiAvatar}
             alt="Kumi assistant avatar"
             className="h-full w-full object-cover"
           />

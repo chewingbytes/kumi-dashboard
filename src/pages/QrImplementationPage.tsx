@@ -9,6 +9,9 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import bigVerticalViewImage from "@/assets/edited/bigverticalview.jpg";
+import checkInDemoVideo from "@/assets/edited/checkin_demo.mp4";
+import qrImplementationImage from "@/assets/edited/qrcodeimplementation.jpg";
 
 const rolloutSteps = [
   {
@@ -56,17 +59,17 @@ const gallery = [
   {
     title: "Front-desk scan point",
     body: "A bright, highly visible station near the entrance helps students check in naturally as they arrive.",
-    image: "/src/assets/edited/bigverticalview.jpg",
+    image: bigVerticalViewImage,
   },
   {
     title: "Student card pack",
     body: "Sample scannable labels can be printed, cut, and distributed during onboarding week.",
-    image: "/src/assets/edited/qrcodeimplementation.jpg",
+    image: qrImplementationImage,
   },
   {
     title: "Quick Demo",
     body: "Here is a quick video on how it will look like.",
-    video: "/src/assets/edited/checkin_demo.mp4",
+    video: checkInDemoVideo,
   },
 ];
 
@@ -123,7 +126,7 @@ export default function QrImplementationPage() {
             <div className="relative">
               <div className="relative z-10 overflow-hidden rounded-tl-[100px] rounded-tr-[40px] rounded-br-[100px] rounded-bl-[40px] border-2 border-[#1E293B] bg-white shadow-[12px_12px_0px_#1E293B]">
                 <img
-                  src="/src/assets/edited/qrcodeimplementation.jpg"
+                  src={qrImplementationImage}
                   alt="QR code rollout mockup"
                   className="h-full w-full object-cover mix-blend-multiply"
                 />

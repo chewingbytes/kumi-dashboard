@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
+import kumiLogo from "@/assets/image.png";
 
 const API_URL = import.meta.env.VITE_API_BASE || "http://localhost:3000";
 
@@ -63,7 +64,7 @@ export default function ContactPage() {
         <div className="flex justify-center items-center gap-2 sm:gap-3">
           <a href="/">
             <img
-              src="/src/assets/image.png"
+              src={kumiLogo}
               alt="Kumi Logo"
               className="w-9 h-9 sm:w-12 sm:h-12 shadow-[4px_4px_0px_#1E293B] rounded-full border-2 border-[#1E293B]"
             />

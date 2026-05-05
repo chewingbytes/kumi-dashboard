@@ -3,7 +3,7 @@ import { ArrowRight, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
-const API_URL = "http://localhost:8080";
+const API_URL = import.meta.env.VITE_API_BASE || "http://localhost:8080";
 
 export default function LandingPage() {
   const linkColorClass = {

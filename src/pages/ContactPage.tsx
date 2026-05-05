@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
-import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(
-  "http://46.62.162.240:8000",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzcyMDM1MjAwLCJleHAiOjE5Mjk4MDE2MDB9.xwNchAkC_TD1MRZfTNLnP1oJG4EpXq_zYuRJgxQkRH4",
-);
+const API_URL = import.meta.env.VITE_API_BASE || "http://localhost:3000";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -32,15 +28,19 @@ export default function ContactPage() {
     setSubmitMessage("");
 
     try {
-      const { error } = await supabase.from("form").insert([
-        {
+      const response = await fetch(`${API_URL}/api/website`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           name: formData.name,
           email: formData.email,
           message: formData.message,
-        },
-      ]);
+        }),
+      });
 
-      if (error) {
+      if (!response.ok) {
         setSubmitMessage(
           "Error submitting form. Please try again or contact support.",
         );
@@ -89,8 +89,11 @@ export default function ContactPage() {
               Contact Us
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-medium leading-tight">
-              Let’s bring <span className="text-[#8B5CF6] underline decoration-wavy decoration-[#FBBF24]">Kumi</span> to your
-              center.
+              Let’s bring{" "}
+              <span className="text-[#8B5CF6] underline decoration-wavy decoration-[#FBBF24]">
+                Kumi
+              </span>{" "}
+              to your center.
             </h1>
             <p className="text-[#64748B] text-lg leading-relaxed">
               Have questions about Kumi or interested in implementing our

@@ -2,12 +2,8 @@ import { useEffect, useState } from "react";
 import { ArrowRight, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(
-  "http://46.62.162.240:8000",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6InN1cGFiYXNlIiwiaWF0IjoxNzcyMDM1MjAwLCJleHAiOjE5Mjk4MDE2MDB9.xwNchAkC_TD1MRZfTNLnP1oJG4EpXq_zYuRJgxQkRH4",
-);
+const API_URL = "http://localhost:8080";
 
 export default function LandingPage() {
   const linkColorClass = {
@@ -85,19 +81,23 @@ export default function LandingPage() {
     setSubmitMessage("");
 
     try {
-      const { error } = await supabase.from("form").insert([
-        {
+      const response = await fetch(`${API_URL}/api/website`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           name: formData.name,
           email: formData.email,
           message: formData.message,
-        },
-      ]);
+        }),
+      });
 
-      if (error) {
+      if (!response.ok) {
         setSubmitMessage(
           "Error submitting form. Please try again or contact support.",
         );
-        console.error("Supabase error:", error);
+        console.error("API error:", response.statusText);
       } else {
         setSubmitMessage(
           "Thank you for reaching out! We will get back to you soon.",

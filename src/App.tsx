@@ -5,6 +5,7 @@ import DashboardExperiencePage from "@/pages/DashboardExperiencePage";
 import KumonReview from "@/pages/KumonReview";
 import LandingPage from "@/pages/LandingPage";
 import PricingPage from "@/pages/PricingPage";
+import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 import QrImplementationPage from "@/pages/QrImplementationPage";
 import WhatsAppNotificationsPage from "@/pages/WhatsAppNotificationsPage";
 import ContactPage from "@/pages/ContactPage";
@@ -26,6 +27,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/kumon-review" element={<KumonReview />} />
         <Route path="/features/qr-implementation" element={<QrImplementationPage />} />

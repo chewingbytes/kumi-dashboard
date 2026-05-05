@@ -606,28 +606,28 @@ export default function LandingPage() {
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="/features/qr-implementation"
+                  <Link
+                    to="/features/qr-implementation"
                     className="hover:text-[#8B5CF6] hover:cursor-pointer transition-colors"
                   >
                     QR Automation
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="/features/whatsapp-notifications"
+                  <Link
+                    to="/features/whatsapp-notifications"
                     className="hover:text-[#8B5CF6] hover:cursor-pointer transition-colors"
                   >
                     Whatsapp Integration
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="/features/dashboard"
+                  <Link
+                    to="/features/dashboard"
                     className="hover:text-[#8B5CF6] hover:cursor-pointer transition-colors"
                   >
                     Explore the Dashboard
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -637,12 +637,12 @@ export default function LandingPage() {
               </h3>
               <ul className="space-y-4 text-[#64748B] font-medium">
                 <li>
-                  <a
-                    href="/privacy-policy"
+                  <Link
+                    to="/privacy-policy"
                     className="hover:text-[#8B5CF6] hover:cursor-pointer transition-colors"
                   >
                     Privacy Policy
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <Link
